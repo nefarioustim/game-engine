@@ -1,0 +1,1 @@
+var c = document.getElementById('game');
