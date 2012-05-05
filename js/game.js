@@ -5,45 +5,16 @@
             .setFill(
                 GENG.lib.rgbaString(0, 0, 0, 1)
             ),
-        i,
-        spriteList, startx,
+        i, chars,
         anim = 'base',
         ctx = c.context,
-        ships = new Image(),
-        player1,
         player1x = 0, player1y = 0,
         xspeed = 8, yspeed = 8,
         xboundary = 10, yboundary = 10,
         moveUp = false, moveRight = false, moveDown = false, moveLeft = false;
 
-    // Load dem sprites
-    ships.src = "img/uridium-ships.gif";
-    player1 = new GENG.Character(
-        ctx,
-        32,
-        32,
-        [new GENG.Sprite(ships, 4, 56, 32, 32)]
-    );
-
-    spriteList = [];
-    startx = 4;
-    starty = 56;
-    for (i = 0; i < 16; i++) {
-        spriteList.push(
-            new GENG.Sprite(ships, startx + (36 * i), starty, 32, 32)
-        );
-    }
-    player1.newState('base', spriteList, 3);
-
-    spriteList = [];
-    startx = 544;
-    starty = 246;
-    for (i = 0; i < 16; i++) {
-        spriteList.push(
-            new GENG.Sprite(ships, startx - (36 * i), starty, 32, 32)
-        );
-    }
-    player1.newState('base-left', spriteList, 3);
+    // Get characters
+    chars = GENG.getGameCharacters(ctx);
 
     // Trap keyboard events
     k.down('left', function() {
@@ -82,11 +53,11 @@
         if (moveDown) player1y += yspeed;
         // Adjust position for boundaries
         if (player1x < xboundary) player1x = xboundary;
-        if (player1x + player1.w > c.width - xboundary) player1x = c.width - player1.w - xboundary;
+        if (player1x + chars.player1.w > c.width - xboundary) player1x = c.width - chars.player1.w - xboundary;
         if (player1y < yboundary) player1y = yboundary;
-        if (player1y + player1.h > c.height - yboundary) player1y = c.height - player1.h - yboundary;
+        if (player1y + chars.player1.h > c.height - yboundary) player1y = c.height - chars.player1.h - yboundary;
 
-        player1.render(player1x, player1y, anim);
+        chars.player1.render(player1x, player1y, anim);
     });
 
     if (s) {
