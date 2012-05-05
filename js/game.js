@@ -53,9 +53,11 @@
         if (moveDown) player1y += yspeed;
         // Adjust position for boundaries
         if (player1x < xboundary) player1x = xboundary;
-        if (player1x + chars.player1.w > c.width - xboundary) player1x = c.width - chars.player1.w - xboundary;
+        if (player1x + chars.player1.w > c.width - xboundary)
+            player1x = c.width - chars.player1.w - xboundary;
         if (player1y < yboundary) player1y = yboundary;
-        if (player1y + chars.player1.h > c.height - yboundary) player1y = c.height - chars.player1.h - yboundary;
+        if (player1y + chars.player1.h > c.height - yboundary)
+            player1y = c.height - chars.player1.h - yboundary;
 
         chars.player1.render(player1x, player1y, anim);
     });
