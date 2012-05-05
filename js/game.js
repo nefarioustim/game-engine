@@ -1,26 +1,37 @@
 (function(GENG){
     var k = new Kibo(),
+        s = new Stats(),
         c = new GENG.CanvasDirector('game')
             .setFill(
                 GENG.lib.rgbaString(0, 0, 0, 1)
             ),
-        ships = new Image(),
-        stats = new Stats(),
+        i,
+        spriteList, startx,
         ctx = c.context,
-        player1x = 10,
-        player1y = 10,
-        xspeed = 8,
-        yspeed = 8,
-        xboundary = 10,
-        yboundary = 10,
-        moveUp = false,
-        moveRight = false,
-        moveDown = false,
-        moveLeft = false;
+        ships = new Image(),
+        player1,
+        player1x = 10, player1y = 10,
+        xspeed = 8, yspeed = 8,
+        xboundary = 10, yboundary = 10,
+        moveUp = false, moveRight = false, moveDown = false, moveLeft = false;
 
     // Load dem sprites
     ships.src = "img/uridium-ships.gif";
-    player1 = new GENG.Sprite(ships, 4, 56, 32, 32);
+    player1 = new GENG.Character(
+        ctx,
+        32,
+        32,
+        new GENG.Sprite(ships, 4, 56, 32, 32)
+    );
+
+    spriteList = [];
+    startx = 4;
+    for (i = 0; i < 16; i++) {
+        spriteList.push(
+            new GENG.Sprite(ships, startx + (36 * i), 56, 32, 32)
+        );
+    }
+    player1.newState('base', spriteList, 3);
 
     // Trap keyboard events
     k.down('left', function() {
@@ -57,15 +68,17 @@
         if (player1y < yboundary) player1y = yboundary;
         if (player1y + player1.h > c.height - yboundary) player1y = c.height - player1.h - yboundary;
 
-        player1.render(ctx, player1x, player1y);
+        player1.render(player1x, player1y);
     });
 
-    // Align top-left
-    stats.getDomElement().style.position = 'absolute';
-    stats.getDomElement().style.left = '0px';
-    stats.getDomElement().style.top = '0px';
+    if (s) {
+        // Align top-left
+        s.getDomElement().style.position = 'absolute';
+        s.getDomElement().style.left = '0px';
+        s.getDomElement().style.top = '0px';
 
-    document.body.appendChild(stats.getDomElement());
+        document.body.appendChild(s.getDomElement());
 
-    setInterval(stats.update, 1000 / 60);
+        setInterval(s.update, 1000 / 60);
+    }
 })(window.GENG);
