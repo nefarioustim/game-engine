@@ -1,6 +1,9 @@
 (function(GENG){
     var k = new Kibo(),
-        c = new GENG.CanvasDirector('game'),
+        c = new GENG.CanvasDirector('game')
+            .setFill(
+                GENG.lib.rgbaString(0, 0, 0, 1)
+            ),
         ships = new Image(),
         stats = new Stats(),
         ctx = c.context,
@@ -14,10 +17,6 @@
         moveRight = false,
         moveDown = false,
         moveLeft = false;
-
-    c.setFill(
-        GENG.lib.rgbaString(0, 0, 0, 1)
-    );
 
     // Load dem sprites
     ships.src = "img/uridium-ships.gif";
