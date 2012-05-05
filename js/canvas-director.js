@@ -26,28 +26,31 @@
     GENG.CanvasDirector.prototype = {
         setFill: function(rgbaString) {
             this.fill = rgbaString;
+            return this;
         },
 
         origin: function(x, y) {
             this.context.translate(x, y);
             this.offsetx = -x;
             this.offsety = -y;
+            return this;
         },
 
         clear: function() {
             this.context.fillStyle = this.fill;
             this.context.fillRect(0 + this.offsetx, 0 + this.offsety, this.width, this.height);
+            return this;
         },
 
         run: function(frameCallback, initCallback) {
-            if (initCallback) {
-                initCallback();
-            }
+            if (initCallback) initCallback();
 
-            return setInterval(function(context, callback){
+            this.interval = setInterval(function(context, callback){
                 context.clear();
                 callback();
             }, this.refreshRate, this, frameCallback);
+
+            return this;
         }
     };
 
