@@ -26,9 +26,10 @@
 
     spriteList = [];
     startx = 4;
+    starty = 56;
     for (i = 0; i < 16; i++) {
         spriteList.push(
-            new GENG.Sprite(ships, startx + (36 * i), 56, 32, 32)
+            new GENG.Sprite(ships, startx + (36 * i), starty, 32, 32)
         );
     }
     player1.newState('base', spriteList, 3);
