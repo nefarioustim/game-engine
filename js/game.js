@@ -7,10 +7,11 @@
             ),
         i,
         spriteList, startx,
+        anim = 'base',
         ctx = c.context,
         ships = new Image(),
         player1,
-        player1x = 10, player1y = 10,
+        player1x = 0, player1y = 0,
         xspeed = 8, yspeed = 8,
         xboundary = 10, yboundary = 10,
         moveUp = false, moveRight = false, moveDown = false, moveLeft = false;
@@ -33,6 +34,16 @@
         );
     }
     player1.newState('base', spriteList, 3);
+
+    spriteList = [];
+    startx = 544;
+    starty = 246;
+    for (i = 0; i < 16; i++) {
+        spriteList.push(
+            new GENG.Sprite(ships, startx - (36 * i), starty, 32, 32)
+        );
+    }
+    player1.newState('base-left', spriteList, 3);
 
     // Trap keyboard events
     k.down('left', function() {
@@ -59,8 +70,14 @@
     // Game loop
     c.run(function(){
         // Adjust position based on keyboard
-        if (moveLeft) player1x -= xspeed;
-        if (moveRight) player1x += xspeed;
+        if (moveLeft) {
+            player1x -= xspeed;
+            anim = 'base-left';
+        }
+        if (moveRight) {
+            player1x += xspeed;
+            anim = 'base';
+        }
         if (moveUp) player1y -= yspeed;
         if (moveDown) player1y += yspeed;
         // Adjust position for boundaries
@@ -69,7 +86,7 @@
         if (player1y < yboundary) player1y = yboundary;
         if (player1y + player1.h > c.height - yboundary) player1y = c.height - player1.h - yboundary;
 
-        player1.render(player1x, player1y);
+        player1.render(player1x, player1y, anim);
     });
 
     if (s) {
