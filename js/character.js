@@ -21,13 +21,14 @@
 
             return this;
         },
-        render: function(x, y, nextState) {
+        render: function(x, y, nextState, instant) {
             var state = this.states[this.currentState],
                 changeFrame = (this.frameDelta === state.speed);
 
-            nextState = (nextState || 'base');
+            nextState = nextState || 'base';
+            instant = instant || false;
 
-            if (this.currentFrame === state.frames.length) {
+            if (instant || this.currentFrame === state.frames.length) {
                 this.currentState = nextState;
                 this.currentFrame = 0;
             }
