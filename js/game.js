@@ -15,6 +15,10 @@
         moveDown = false,
         moveLeft = false;
 
+    c.setFill(
+        GENG.lib.rgbaString(0, 0, 0, 1)
+    );
+
     // Load dem sprites
     ships.src = "img/uridium-ships.gif";
     player1 = new GENG.Sprite(ships, 4, 56, 32, 32);
