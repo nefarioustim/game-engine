@@ -21,7 +21,7 @@
         ctx,
         32,
         32,
-        new GENG.Sprite(ships, 4, 56, 32, 32)
+        [new GENG.Sprite(ships, 4, 56, 32, 32)]
     );
 
     spriteList = [];

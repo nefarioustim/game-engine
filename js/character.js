@@ -16,7 +16,7 @@
         newState: function(name, frames, speed) {
             this.states[name] = {
                 'frames': frames,
-                'speed': speed
+                'speed': speed || 0
             };
 
             return this;
@@ -27,14 +27,13 @@
 
             nextState = (nextState || 'base');
 
-            if (this.currentFrame < state.frames.length) {
-                state.frames[
-                    changeFrame ? this.currentFrame++ : this.currentFrame
-                ].render(this.ctx, x, y);
-            } else {
+            if (this.currentFrame === state.frames.length) {
                 this.currentState = nextState;
                 this.currentFrame = 0;
             }
+            state.frames[
+                changeFrame ? this.currentFrame++ : this.currentFrame
+            ].render(this.ctx, x, y);
             this.frameDelta = changeFrame ? 0 : this.frameDelta + 1;
         }
     };
