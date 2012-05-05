@@ -1,9 +1,21 @@
 <html lang="en">
     <head>
         <title>Game</title>
+        <style type="text/css">
+            canvas {
+                border: 1px solid #ccc;
+                display: block;
+                margin: 0 auto;
+            }
+        </style>
     </head>
     <body>
-        <canvas id="game"></canvas>
+        <canvas id="game" width="640" height="480"></canvas>
+        <script type="text/javascript" src="https://raw.github.com/marquete/kibo/master/kibo.js"></script>
+        <script type="text/javascript" src="js/stats.js"></script>
+        <script type="text/javascript" src="js/lib.js"></script>
+        <script type="text/javascript" src="js/canvas-director.js"></script>
+        <script type="text/javascript" src="js/sprite.js"></script>
         <script type="text/javascript" src="js/game-loop.js"></script>
         <script type="text/javascript" src="js/game.js"></script>
     </body>
