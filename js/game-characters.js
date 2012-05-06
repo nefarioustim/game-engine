@@ -15,6 +15,45 @@
             [new GENG.Sprite(ships, 4, 56, 32, 32)]
         );
 
+        characters.player1.newState('base-left', [
+            new GENG.Sprite(ships, 544, 246, 32, 32)
+        ], 0);
+
+        spriteList = [];
+        startx = 4;
+        starty = 154;
+        for (i = 0; i < 7; i++) {
+            spriteList.push(
+                new GENG.Sprite(ships, startx + (36 * i), starty, 32, 32)
+            );
+        }
+        startx = 544;
+        starty = 246;
+        for (i = 7; i < 16; i++) {
+            spriteList.push(
+                new GENG.Sprite(ships, startx + (36 * i), starty, 32, 32)
+            );
+        }
+        characters.player1.newState('flip-left', spriteList, 3);
+
+        spriteList = [];
+        startx = 544;
+        starty = 344;
+        for (i = 0; i < 7; i++) {
+            spriteList.push(
+                new GENG.Sprite(ships, startx - (36 * i), starty, 32, 32)
+            );
+        }
+        startx = 292;
+        starty = 56;
+        for (i = 0; i < 7; i++) {
+            spriteList.push(
+                new GENG.Sprite(ships, startx + (36 * i), starty, 32, 32)
+            );
+        }
+        characters.player1.newState('flip-right', spriteList, 3);
+
+        spriteList = [];
         startx = 4;
         starty = 56;
         for (i = 0; i < 16; i++) {
@@ -22,7 +61,7 @@
                 new GENG.Sprite(ships, startx + (36 * i), starty, 32, 32)
             );
         }
-        characters.player1.newState('base', spriteList, 3);
+        characters.player1.newState('roll', spriteList, 3);
 
         spriteList = [];
         startx = 544;
@@ -32,7 +71,7 @@
                 new GENG.Sprite(ships, startx - (36 * i), starty, 32, 32)
             );
         }
-        characters.player1.newState('base-left', spriteList, 3);
+        characters.player1.newState('roll-left', spriteList, 3);
 
         return characters;
     };
