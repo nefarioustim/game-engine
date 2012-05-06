@@ -5,9 +5,7 @@
             .setFill(
                 GENG.lib.rgbaString(0, 0, 0, 1)
             ),
-        i, chars,
-        anim = 'base',
-        instant = false,
+        i, chars, anim = 'base-right',
         ctx = c.context,
         player1x = 0, player1y = 0,
         xspeed = 8, yspeed = 8,
@@ -16,6 +14,9 @@
 
     // Build the character objects
     chars = GENG.getGameCharacters(ctx);
+
+    // Default state
+    chars.player1.currentState = 'base-right';
 
     // Trap keyboard events
     k.down('left', function() {
@@ -44,13 +45,11 @@
         // Adjust position based on keyboard
         if (moveLeft) {
             player1x -= xspeed;
-            if (anim !== 'base-left') instant = true;
-            anim = 'base-left';
+            chars.player1.currentState = 'base-left';
         }
         if (moveRight) {
             player1x += xspeed;
-            if (anim !== 'base') instant = true;
-            anim = 'base';
+            chars.player1.currentState = 'base-right';
         }
         if (moveUp) player1y -= yspeed;
         if (moveDown) player1y += yspeed;
@@ -65,8 +64,7 @@
         if (player1y + chars.player1.h > c.height - yboundary)
             player1y = c.height - chars.player1.h - yboundary;
 
-        chars.player1.render(player1x, player1y, anim, instant);
-        instant = false;
+        chars.player1.render(player1x, player1y);
     });
 
     if (s) {
