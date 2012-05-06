@@ -35,7 +35,12 @@
             state.frames[
                 changeFrame ? this.currentFrame++ : this.currentFrame
             ].render(this.ctx, x, y);
-            this.frameDelta = changeFrame ? 0 : this.frameDelta + 1;
+
+            if (changeFrame) {
+                this.frameDelta = 0;
+            } else {
+                this.frameDelta += 1;
+            }
         }
     };
 
