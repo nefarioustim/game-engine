@@ -31,7 +31,6 @@
                 this.animQueue,
                 (anim instanceof Array ? anim.reverse() : [anim])
             );
-            console.log(this.animQueue);
 
             return this;
         },
