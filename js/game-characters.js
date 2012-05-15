@@ -28,7 +28,7 @@
         }
         startx = 292;
         starty = 56;
-        for (i = 0; i < 9; i++) {
+        for (i = 0; i < 8; i++) {
             spriteList.push(
                 new GENG.Sprite(ships, startx + (36 * i), starty, 32, 32)
             );
@@ -45,9 +45,9 @@
         }
         startx = 256;
         starty = 246;
-        for (i = 0; i < 9; i++) {
+        for (i = 0; i < 8; i++) {
             spriteList.push(
-                new GENG.Sprite(ships, startx + (36 * i), starty, 32, 32)
+                new GENG.Sprite(ships, startx - (36 * i), starty, 32, 32)
             );
         }
         characters.player1.newAnim('flip-left', spriteList, 5);
