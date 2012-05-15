@@ -10,32 +10,41 @@
         player1x = 0, player1y = 0,
         xspeed = 8, yspeed = 8,
         xboundary = 10, yboundary = 10,
-        moveUp = false, moveRight = false, moveDown = false, moveLeft = false;
+        moveUp = false, moveRight = false, moveDown = false, moveLeft = false,
+        point = 'r';
 
     // Build the character objects
     chars = GENG.getGameCharacters(ctx);
 
     // Default state
-    chars.player1.currentState = 'base-right';
+    chars.player1
+        .addAnimToQueue('base-right')
+        .setDirRight();
+
+    // console.log(chars.player1.animations);
 
     // Trap keyboard events
     k.down('left', function() {
         moveLeft = true;
+        moveRight = false;
     }).up('left', function() {
         moveLeft = false;
     });
     k.down('right', function() {
         moveRight = true;
+        moveLeft = false;
     }).up('right', function() {
         moveRight = false;
     });
     k.down('up', function() {
         moveUp = true;
+        moveDown = false;
     }).up('up', function() {
         moveUp = false;
     });
     k.down('down', function() {
         moveDown = true;
+        moveUp = false;
     }).up('down', function() {
         moveDown = false;
     });
@@ -45,11 +54,27 @@
         // Adjust position based on keyboard
         if (moveLeft) {
             player1x -= xspeed;
-            chars.player1.currentState = 'base-left';
+            if (chars.player1.direction === 'right') {
+                chars.player1
+                    .reset()
+                    .addAnimToQueue([
+                        'flip-left',
+                        'base-left'
+                    ])
+                    .setDirLeft();
+            }
         }
         if (moveRight) {
             player1x += xspeed;
-            chars.player1.currentState = 'base-right';
+            if (chars.player1.direction === 'left') {
+                chars.player1
+                    .reset()
+                    .addAnimToQueue([
+                        'flip-right',
+                        'base-right'
+                    ])
+                    .setDirRight();
+            }
         }
         if (moveUp) player1y -= yspeed;
         if (moveDown) player1y += yspeed;
