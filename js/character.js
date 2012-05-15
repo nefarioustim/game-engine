@@ -3,8 +3,9 @@
         this.ctx = ctx;
         this.w = w;
         this.h = h;
-        this.states = {};
-        this.currentState = '';
+        this.direction = '';
+        this.animations = {};
+        this.animQueue = [];
         this.currentFrame = 0;
         this.frameDelta = 0;
 
@@ -12,30 +13,76 @@
     };
 
     GENG.Character.prototype = {
-        newState: function(name, frames, speed) {
-            this.states[name] = {
+        newAnim: function(name, frames, speed) {
+            this.animations[name] = {
                 'frames': frames,
                 'speed': speed || 0
             };
 
             return this;
         },
+        reset: function(anim) {
+            this.animQueue = [];
+
+            return this;
+        },
+        addAnimToQueue: function(anim) {
+            this.animQueue.unshift.apply(
+                this.animQueue,
+                (anim instanceof Array ? anim.reverse() : [anim])
+            );
+            console.log(this.animQueue);
+
+            return this;
+        },
+        setDirLeft: function() {
+            this.direction = 'left';
+
+            return this;
+        },
+        setDirRight: function() {
+            this.direction = 'right';
+
+            return this;
+        },
+        setDirUp: function() {
+            this.direction = 'up';
+
+            return this;
+        },
+        setDirDown: function() {
+            this.direction = 'down';
+
+            return this;
+        },
         render: function(x, y) {
-            var state = this.states[this.currentState],
-                changeFrame = (this.frameDelta === state.speed);
+            if (this.animQueue.length > 0) {
+                var currentAnim = this.animQueue[
+                        this.animQueue.length - 1
+                    ],
+                    anim = this.animations[
+                        currentAnim
+                    ],
+                    changeFrame = (this.frameDelta === anim.speed);
 
-            if (this.currentFrame === state.frames.length) {
-                this.currentFrame = 0;
-            }
-            state.frames[
-                changeFrame ? this.currentFrame++ : this.currentFrame
-            ].render(this.ctx, x, y);
+                if (changeFrame) {
+                    this.frameDelta = 0;
+                    this.currentFrame++;
+                } else {
+                    this.frameDelta++;
+                }
 
-            if (changeFrame) {
-                this.frameDelta = 0;
-            } else {
-                this.frameDelta += 1;
+                if (this.currentFrame === anim.frames.length) {
+                    if (this.animQueue.length > 1) this.animQueue.pop();
+                    this.currentFrame = 0;
+                }
+
+                anim.frames[
+                    this.currentFrame
+                ].render(this.ctx, x, y);
             }
+
+            return this;
         }
     };
 
