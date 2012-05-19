@@ -1,10 +1,12 @@
 (function(GENG){
-    GENG.Map = function() {
+    GENG.Map = function(ctx) {
+        this.ctx = ctx;
+        this.tiles = [];
         return this;
     };
 
     GENG.Map.prototype = {
-        getTiles: function(tileImg) {
+        loadTiles: function(tileImg) {
 
         }
     };
